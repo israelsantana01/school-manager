@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.school.manager.school_manager.models.Professor;
 
-
-
 @Repository
 public class ProfessorRepository {
   private SessionFactory sessionFactory;
@@ -49,7 +47,7 @@ public class ProfessorRepository {
     }
   }
 
-  public void save(Professor professor) {
+  public Professor save(Professor professor) {
     Session session = sessionFactory.openSession();
     Transaction transaction = null;
 
@@ -57,6 +55,7 @@ public class ProfessorRepository {
       transaction = session.beginTransaction();
       session.persist(professor);
       transaction.commit();
+      return professor;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
@@ -106,7 +105,7 @@ public class ProfessorRepository {
           transaction.rollback();
       }
       e.printStackTrace();
-      throw new RuntimeException("Erro ao deletar aluno: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao deletar professor: " + e.getMessage(), e);
     } finally {
       session.close();
     }

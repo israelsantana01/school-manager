@@ -1,4 +1,4 @@
-package com.school.manager.school_manager.service;
+package com.school.manager.school_manager.services;
 
 import java.util.List;
 
@@ -30,9 +30,9 @@ public class ProfessorService {
     }
   }
 
-  public void save(Professor professor) {
+  public Professor save(Professor professor) {
     try {
-      professorRepository.save(professor);
+      return professorRepository.save(professor);
     } catch (Exception e) {
       throw e;
     }

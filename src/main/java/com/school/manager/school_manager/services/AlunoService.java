@@ -1,4 +1,4 @@
-package com.school.manager.school_manager.service;
+package com.school.manager.school_manager.services;
 
 import java.util.List;
 
@@ -14,23 +14,14 @@ public class AlunoService {
   @Autowired
   private AlunoRepository alunoRepository;
 
-  // Listar todos os alunos
   public List<Aluno> findAll() {
     try {
-      // List<Aluno> alunos = alunoRepository.findAll();
-      // alunos.forEach(aluno -> {
-      //   if (aluno.getTurmas() == null) {
-      //     aluno.setTurmas(new ArrayList<>());
-      //   }
-      // });
-      // return alunos;
       return  alunoRepository.findAll();
     } catch (Exception e) {
       throw e;
     }
   }
 
-  // Buscar aluno por ID
   public Aluno findById(Long id) {
     try {
       return alunoRepository.findById(id);
@@ -39,7 +30,6 @@ public class AlunoService {
     }
   }
 
-  // Criar ou atualizar um aluno
   public void save(Aluno aluno) {
     try {
       alunoRepository.save(aluno);
@@ -56,7 +46,6 @@ public class AlunoService {
     }
   }
 
-  // // Deletar aluno por ID
   public void deleteById(Long id) {
     try {
       alunoRepository.delete(id);

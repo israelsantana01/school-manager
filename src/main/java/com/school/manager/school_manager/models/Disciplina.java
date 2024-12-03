@@ -28,9 +28,9 @@ public class Disciplina {
 
   @ManyToMany
   @JoinTable(
-      name = "disciplina_turma",
-      joinColumns = @JoinColumn(name = "disciplina_id"),
-      inverseJoinColumns = @JoinColumn(name = "turma_id")
+    name = "disciplina_turma",
+    joinColumns = @JoinColumn(name = "disciplina_id"),
+    inverseJoinColumns = @JoinColumn(name = "turma_id")
   )
   private List<Turma> turmas;
 

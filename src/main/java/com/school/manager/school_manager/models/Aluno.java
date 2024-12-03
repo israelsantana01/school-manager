@@ -1,7 +1,6 @@
 package com.school.manager.school_manager.models;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,8 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,13 +27,9 @@ public class Aluno {
   private String email;
   private LocalDate dataNascimento;
 
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(
-    name = "aluno_turma",
-    joinColumns = @JoinColumn(name = "aluno_id"),
-    inverseJoinColumns = @JoinColumn(name = "turma_id")
-  )
-  private List<Turma> turmas;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "turma_id", nullable = false)
+  private Turma turma;
 
   public Long getId() {
     return id;
@@ -77,11 +71,11 @@ public class Aluno {
     this.dataNascimento = dataNascimento;
   }
 
-  public List<Turma> getTurmas() {
-    return turmas;
+  public Turma getTurma() {
+    return turma;
   }
 
-  public void setTurmas(List<Turma> turmas) {
-    this.turmas = turmas;
+  public void setTurmas(Turma turma) {
+    this.turma = turma;
   }
 }
