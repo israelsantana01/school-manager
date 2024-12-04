@@ -2,7 +2,11 @@ package com.school.manager.school_manager.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.school.manager.school_manager.views.Views;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,16 +21,22 @@ import jakarta.persistence.Table;
 public class Disciplina {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonView(Views.Public.class)
   private Long id;
 
+  @JsonView(Views.Public.class)
   private String nome;
+
+  @JsonView(Views.Public.class)
   private int cargaHoraria;
 
+  @JsonView(Views.Internal.class)
   @ManyToOne
   @JoinColumn(name = "professor_id", nullable = false)
   private Professor professor;
 
-  @ManyToMany
+  @JsonView(Views.Internal.class)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "disciplina_turma",
     joinColumns = @JoinColumn(name = "disciplina_id"),

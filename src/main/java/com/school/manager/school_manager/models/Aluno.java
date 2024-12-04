@@ -19,17 +19,40 @@ public class Aluno {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String nome;
-
   @Column(unique = true, nullable = false)
   private String matricula;
 
+  @Column(nullable = false)
+  private String nome;
+
+  @Column(nullable = false)
   private String email;
+
+  @Column(nullable = false)
   private LocalDate dataNascimento;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "turma_id", nullable = false)
   private Turma turma;
+
+  public Aluno() {}
+
+  public Aluno(String nome, String matricula, String email, LocalDate dataNascimento, Turma turma) {
+    this.nome = nome;
+    this.matricula = matricula;
+    this.email = email;
+    this.dataNascimento = dataNascimento;
+    this.turma = turma;
+  }
+
+  public Aluno(Long id, String matricula, String nome, String email, LocalDate dataNascimento, Turma turma) {
+    this.id = id;
+    this.matricula = matricula;
+    this.nome = nome;
+    this.email = email;
+    this.dataNascimento = dataNascimento;
+    this.turma = turma;
+  }
 
   public Long getId() {
     return id;

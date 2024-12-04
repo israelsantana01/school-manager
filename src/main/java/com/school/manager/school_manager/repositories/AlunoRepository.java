@@ -49,7 +49,7 @@ public class AlunoRepository {
     }
   }
 
-  public void save(Aluno aluno) {
+  public Aluno save(Aluno aluno) {
     Session session = sessionFactory.openSession();
     Transaction transaction = null;
 
@@ -57,6 +57,7 @@ public class AlunoRepository {
       transaction = session.beginTransaction();
       session.persist(aluno);
       transaction.commit();
+      return aluno;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
@@ -68,7 +69,7 @@ public class AlunoRepository {
     }
   }
 
-  public void update(Aluno aluno) {
+  public Aluno update(Aluno aluno) {
     Session session = sessionFactory.openSession();
     Transaction transaction = null;
 
@@ -76,6 +77,7 @@ public class AlunoRepository {
       transaction = session.beginTransaction();
       session.merge(aluno);
       transaction.commit();
+      return aluno;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();

@@ -2,7 +2,9 @@ package com.school.manager.school_manager.models;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.school.manager.school_manager.views.Views;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,21 +14,27 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name = "Professor")
 public class Professor {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonView(Views.Public.class)
   private Long id;
 
+  @JsonView(Views.Public.class)
   private String nome;
 
+  @JsonView(Views.Public.class)
   @Column(unique = true, nullable = false)
   private String email;
 
+  @JsonView(Views.Internal.class)
   private String disciplinaPrincipal;
 
-  @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @JsonView(Views.Internal.class)
+  @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
   private List<Disciplina> disciplinas;
 
   public Long getId() {
