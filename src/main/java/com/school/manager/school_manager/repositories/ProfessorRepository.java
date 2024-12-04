@@ -67,7 +67,7 @@ public class ProfessorRepository {
     }
   }
 
-  public void update(Professor professor) {
+  public Professor update(Professor professor) {
     Session session = sessionFactory.openSession();
     Transaction transaction = null;
 
@@ -75,6 +75,7 @@ public class ProfessorRepository {
       transaction = session.beginTransaction();
       session.merge(professor);
       transaction.commit();
+      return professor;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();

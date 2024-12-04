@@ -27,6 +27,7 @@ public class AlunoController {
     private String className = "Aluno(a)";
     private String POST_SUCCESS_MSG = className + " criado(a) com sucesso!";
     private String PUT_SUCCESS_MSG = className + " atualizado(a) com sucesso!";
+    private String DELETE_SUCCESS_MSG = className + " deletado(a) com sucesso!";
 
     @Autowired
     private AlunoService alunoService;
@@ -48,9 +49,9 @@ public class AlunoController {
         try {
             return ResponseEntity.ok(ResponseHelper.buildResponse(alunoService.findById(id)));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ResponseHelper.buildResponse(null, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }
     }
 
@@ -89,9 +90,9 @@ public class AlunoController {
     public ResponseEntity<?> deleteAluno(@PathVariable Long id) {
         try {
             alunoService.deleteById(id);
-            return ResponseEntity.ok("Aluno deletado com sucesso!");
+            return ResponseEntity.ok(ResponseHelper.buildResponse(null, DELETE_SUCCESS_MSG));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }
     }
 }

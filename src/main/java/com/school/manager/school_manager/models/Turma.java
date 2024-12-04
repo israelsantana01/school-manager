@@ -2,7 +2,6 @@ package com.school.manager.school_manager.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,8 +28,11 @@ public class Turma {
   private int ano;
 
   // @JsonView(Views.Internal.class)
-  @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
   private List<Aluno> alunos = new ArrayList<>();
+
+  @ManyToMany(mappedBy = "turmas")
+  private List<Professor> professores;
 
   // @JsonView(Views.Internal.class)
   @ManyToMany(fetch = FetchType.EAGER)

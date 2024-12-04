@@ -30,6 +30,20 @@ public class DisciplinaRepository {
     }
   }
 
+  public List<Disciplina> findAllById(List<Long> ids) {
+    Session session = sessionFactory.openSession();
+
+    try {
+      Query<Disciplina> query = session.createQuery("FROM Disciplina WHERE id IN :ids", Disciplina.class);
+      query.setParameter("ids", ids);
+      return query.getResultList();
+    } catch (Exception e) {
+      throw new RuntimeException("Erro ao buscar turmas: " + e.getMessage(), e);
+    } finally {
+      session.close();
+    }
+  }
+
   public Disciplina findById(Long id) {
     Session session = sessionFactory.openSession();
     try {

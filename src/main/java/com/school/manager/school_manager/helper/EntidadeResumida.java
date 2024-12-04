@@ -3,10 +3,17 @@ package com.school.manager.school_manager.helper;
 public class EntidadeResumida {
   Long id;
   String nome;
+  int cargaHoraria;
 
   public EntidadeResumida(Long id, String nome) {
     this.id = id;
     this.nome = nome;
+  }
+
+  public EntidadeResumida(Long id, String nome, int cargaHoraria) {
+    this.id = id;
+    this.nome = nome;
+    this.cargaHoraria = cargaHoraria;
   }
 
   public Long getId() {
@@ -23,6 +30,14 @@ public class EntidadeResumida {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public int getCargaHoraria() {
+    return cargaHoraria;
+  }
+
+  public void setCargaHoraria(int cargaHoraria) {
+    this.cargaHoraria = cargaHoraria;
   }
 
 }

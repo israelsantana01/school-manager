@@ -11,6 +11,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -20,22 +23,43 @@ import jakarta.persistence.Table;
 public class Professor {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @JsonView(Views.Public.class)
   private Long id;
 
-  @JsonView(Views.Public.class)
   private String nome;
 
-  @JsonView(Views.Public.class)
   @Column(unique = true, nullable = false)
   private String email;
 
-  @JsonView(Views.Internal.class)
   private String disciplinaPrincipal;
 
   @JsonView(Views.Internal.class)
   @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
   private List<Disciplina> disciplinas;
+
+  @ManyToMany
+  @JoinTable(
+    name = "professor_turma",
+    joinColumns = @JoinColumn(name = "professor_id"),
+    inverseJoinColumns = @JoinColumn(name = "turma_id")
+  )
+  private List<Turma> turmas;
+
+  public Professor() { }
+
+  public Professor(Long id, String nome, String email, String disciplinaPrincipal, List<Disciplina> disciplinas) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+    this.disciplinaPrincipal = disciplinaPrincipal;
+    this.disciplinas = disciplinas;
+  }
+
+  public Professor(String nome, String email, String disciplinaPrincipal, List<Disciplina> disciplinas) {
+    this.nome = nome;
+    this.email = email;
+    this.disciplinaPrincipal = disciplinaPrincipal;
+    this.disciplinas = disciplinas;
+  }
 
   public Long getId() {
     return id;
