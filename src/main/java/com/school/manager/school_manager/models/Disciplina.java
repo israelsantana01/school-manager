@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.school.manager.school_manager.views.Views;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,16 +22,14 @@ import jakarta.persistence.Table;
 public class Disciplina {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @JsonView(Views.Public.class)
   private Long id;
 
-  @JsonView(Views.Public.class)
+  @Column(nullable = false)
   private String nome;
 
-  @JsonView(Views.Public.class)
+  @Column(nullable = false)
   private int cargaHoraria;
 
-  @JsonView(Views.Internal.class)
   @ManyToOne
   @JoinColumn(name = "professor_id", nullable = false)
   private Professor professor;
@@ -43,6 +42,24 @@ public class Disciplina {
     inverseJoinColumns = @JoinColumn(name = "turma_id")
   )
   private List<Turma> turmas;
+
+  public Disciplina() {
+  }
+
+  public Disciplina(Long id, String nome, int cargaHoraria, Professor professor, List<Turma> turmas) {
+    this.id = id;
+    this.nome = nome;
+    this.cargaHoraria = cargaHoraria;
+    this.professor = professor;
+    this.turmas = turmas;
+  }
+
+  public Disciplina(String nome, int cargaHoraria, Professor professor, List<Turma> turmas) {
+    this.nome = nome;
+    this.cargaHoraria = cargaHoraria;
+    this.professor = professor;
+    this.turmas = turmas;
+  }
 
   public Long getId() {
     return id;

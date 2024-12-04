@@ -12,7 +12,6 @@ import com.school.manager.school_manager.dtos.professores.ProfessorGetByIdRespon
 import com.school.manager.school_manager.dtos.professores.ProfessorRequest;
 import com.school.manager.school_manager.helper.EntidadeResumida;
 import com.school.manager.school_manager.models.Professor;
-import com.school.manager.school_manager.repositories.DisciplinaRepository;
 import com.school.manager.school_manager.repositories.ProfessorRepository;
 
 @Service
@@ -20,9 +19,6 @@ public class ProfessorService {
 
   @Autowired
   private ProfessorRepository professorRepository;
-
-  @Autowired
-  private DisciplinaRepository disciplinaRepository;
 
   public List<ProfessorGetAllResponse> findAll() {
     try {
