@@ -8,95 +8,95 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.school.manager.school_manager.models.Professor;
+import com.school.manager.school_manager.models.Nota;
 
 @Repository
-public class ProfessorRepository {
+public class NotaRepository {
   private SessionFactory sessionFactory;
 
-  public ProfessorRepository(SessionFactory sessionFactory) {
+  public NotaRepository(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
   }
 
-  public List<Professor> findAll() {
+  public List<Nota> findAll() {
     Session session = sessionFactory.openSession();
     try {
-      Query<Professor> query = session.createQuery(" FROM Professor", Professor.class);
+      Query<Nota> query = session.createQuery(" FROM Nota", Nota.class);
       return query.getResultList();
     } catch (Exception e) {
-      throw new RuntimeException("Erro ao buscar professores: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao buscar notas: " + e.getMessage(), e);
     } finally {
       session.close();
     }
   }
 
-  public List<Professor> findAllById(List<Long> ids) {
+  public List<Nota> findByAlunoId(Long alunoId) {
     Session session = sessionFactory.openSession();
 
     try {
-      Query<Professor> query = session.createQuery("FROM Professor WHERE id IN :ids", Professor.class);
-      query.setParameter("ids", ids);
+      Query<Nota> query = session.createQuery("FROM Nota WHERE id = :id", Nota.class);
+      query.setParameter("id", alunoId);
       return query.getResultList();
     } catch (Exception e) {
-      throw new RuntimeException("Erro ao buscar professores: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao buscar notas: " + e.getMessage(), e);
     } finally {
       session.close();
     }
   }
 
-
-  public Professor findById(Long id) {
+  public Nota findById(Long id) {
     Session session = sessionFactory.openSession();
-    try {
-      Professor professor = session.get(Professor.class, id);
 
-      if (professor != null) {
-        return professor;
+    try {
+      Nota nota = session.get(Nota.class, id);
+
+      if (nota != null) {
+        return nota;
       }
 
-      throw new Exception("Professor com ID " + id + " não encontrado.");
+      throw new Exception("Nota com ID " + id + " não encontrada.");
     } catch (Exception e) {
-      throw new RuntimeException("Erro ao buscar professor: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao buscar nota: " + e.getMessage(), e);
     } finally {
       session.close();
     }
   }
 
-  public Professor save(Professor professor) {
+  public Nota save(Nota nota) {
     Session session = sessionFactory.openSession();
     Transaction transaction = null;
 
     try {
       transaction = session.beginTransaction();
-      session.persist(professor);
+      session.persist(nota);
       transaction.commit();
-      return professor;
+      return nota;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
       }
       e.printStackTrace();
-      throw new RuntimeException("Erro ao salvar o professor: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao salvar a nota: " + e.getMessage(), e);
     } finally {
       session.close();
     }
   }
 
-  public Professor update(Professor professor) {
+  public Nota update(Nota nota) {
     Session session = sessionFactory.openSession();
     Transaction transaction = null;
 
     try {
       transaction = session.beginTransaction();
-      session.merge(professor);
+      session.merge(nota);
       transaction.commit();
-      return professor;
+      return nota;
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
       }
       e.printStackTrace();
-      throw new RuntimeException("Erro ao atualizar o professor: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao atualizar a nota: " + e.getMessage(), e);
     } finally {
       session.close();
     }
@@ -108,24 +108,22 @@ public class ProfessorRepository {
 
     try {
       transaction = session.beginTransaction();
-      Professor professor = session.get(Professor.class, id);
+      Nota nota = session.get(Nota.class, id);
 
-      if (professor != null) {
-        session.remove(professor);
+      if (nota != null) {
+        session.remove(nota);
         transaction.commit();
       } else {
-        throw new Exception("Professor com ID " + id + " não encontrado para exclusão.");
+        throw new Exception("Nota com ID " + id + " não encontrada para exclusão.");
       }
     } catch (Exception e) {
       if (transaction != null) {
           transaction.rollback();
       }
       e.printStackTrace();
-      throw new RuntimeException("Erro ao deletar professor: " + e.getMessage(), e);
+      throw new RuntimeException("Erro ao deletar nota: " + e.getMessage(), e);
     } finally {
       session.close();
     }
   }
-
 }
-

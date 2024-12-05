@@ -2,9 +2,6 @@ package com.school.manager.school_manager.models;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.school.manager.school_manager.views.Views;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,11 +29,10 @@ public class Professor {
 
   private String disciplinaPrincipal;
 
-  @JsonView(Views.Internal.class)
   @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
   private List<Disciplina> disciplinas;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "professor_turma",
     joinColumns = @JoinColumn(name = "professor_id"),
@@ -100,5 +96,14 @@ public class Professor {
   public void setDisciplinas(List<Disciplina> disciplinas) {
     this.disciplinas = disciplinas;
   }
+
+  public List<Turma> getTurmas() {
+    return turmas;
+  }
+
+  public void setTurmas(List<Turma> turmas) {
+    this.turmas = turmas;
+  }
+
 }
 

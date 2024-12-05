@@ -44,6 +44,20 @@ public class TurmaRepository {
     }
   }
 
+  public List<Turma> findAllByDisciplinaId(Long disciplinaId) {
+    Session session = sessionFactory.openSession();
+
+    try {
+      Query<Turma> query = session.createQuery("FROM Turma t JOIN t.disciplinas d WHERE d.id = :disciplinaId", Turma.class);
+      query.setParameter("disciplinaId", disciplinaId);
+      return query.getResultList();
+    } catch (Exception e) {
+      throw new RuntimeException("Erro ao buscar turmas: " + e.getMessage(), e);
+    } finally {
+      session.close();
+    }
+  }
+
   public Turma findById(Long id) {
     Session session = sessionFactory.openSession();
     try {

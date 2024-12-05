@@ -1,8 +1,5 @@
 package com.school.manager.school_manager.dtos.disciplinas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,8 +14,6 @@ public class DisciplinaRequest {
 
   @NotNull(message = "O id do(a) professor(a) é obrigatório.")
   private Long professorId;
-
-  private List<Long> turmas = new ArrayList<>();
 
   public String getNome() {
     return nome;
@@ -42,14 +37,6 @@ public class DisciplinaRequest {
 
   public void setProfessorId(Long professorId) {
     this.professorId = professorId;
-  }
-
-  public List<Long> getTurmas() {
-    return turmas;
-  }
-
-  public void setTurmas(List<Long> turmas) {
-    this.turmas = turmas;
   }
 
 }

@@ -30,6 +30,20 @@ public class AlunoRepository {
     }
   }
 
+  public List<Aluno> findAllById(List<Long> ids) {
+    Session session = sessionFactory.openSession();
+
+    try {
+      Query<Aluno> query = session.createQuery("FROM Aluno WHERE id IN :ids", Aluno.class);
+      query.setParameter("ids", ids);
+      return query.getResultList();
+    } catch (Exception e) {
+      throw new RuntimeException("Erro ao buscar turmas: " + e.getMessage(), e);
+    } finally {
+      session.close();
+    }
+  }
+
   public Aluno findById(Long id) {
     Session session = sessionFactory.openSession();
     try {
