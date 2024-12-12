@@ -1,9 +1,7 @@
 package com.school.manager.school_manager.models;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonView;
-import com.school.manager.school_manager.views.Views;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +18,14 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Disciplina")
 public class Disciplina {
+  public Disciplina(Long id, String nome, int cargaHoraria, Professor professor, List<Turma> turmas) {
+    this.id = id;
+    this.nome = nome;
+    this.cargaHoraria = cargaHoraria;
+    this.professor = professor;
+    this.turmas = turmas;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -34,31 +40,22 @@ public class Disciplina {
   @JoinColumn(name = "professor_id", nullable = false)
   private Professor professor;
 
-  @JsonView(Views.Internal.class)
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "disciplina_turma",
     joinColumns = @JoinColumn(name = "disciplina_id"),
     inverseJoinColumns = @JoinColumn(name = "turma_id")
   )
-  private List<Turma> turmas;
-
-  public Disciplina() {
-  }
-
-  public Disciplina(Long id, String nome, int cargaHoraria, Professor professor, List<Turma> turmas) {
-    this.id = id;
-    this.nome = nome;
-    this.cargaHoraria = cargaHoraria;
-    this.professor = professor;
-    this.turmas = turmas;
-  }
+  private List<Turma> turmas = new ArrayList<>();
 
   public Disciplina(String nome, int cargaHoraria, Professor professor, List<Turma> turmas) {
     this.nome = nome;
     this.cargaHoraria = cargaHoraria;
     this.professor = professor;
     this.turmas = turmas;
+  }
+
+  public Disciplina() {
   }
 
   public Long getId() {

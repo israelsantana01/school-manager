@@ -27,7 +27,6 @@ public class DisciplinaController {
     private String className = "Disciplina";
     private String POST_SUCCESS_MSG = className + " criada com sucesso!";
     private String PUT_SUCCESS_MSG = className + " atualizada com sucesso!";
-    private String DELETE_SUCCESS_MSG = className + " deletada com sucesso!";
 
     @Autowired
     private DisciplinaService disciplinaService;
@@ -85,7 +84,7 @@ public class DisciplinaController {
     public ResponseEntity<?> deleteDisciplina(@PathVariable Long id) {
         try {
             disciplinaService.deleteById(id);
-            return ResponseEntity.ok(ResponseHelper.buildResponse(null, DELETE_SUCCESS_MSG));
+            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id" + id + " deletada com sucesso!"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }

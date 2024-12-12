@@ -6,7 +6,15 @@ public class DisciplinaRequest {
   private String nome;
   private int cargaHoraria;
   private Long professorId;
-  private List<Long> turmas;
+  private List<Long> turmasIds;
+
+  public List<Long> getTurmasIds() {
+    return turmasIds;
+  }
+
+  public void setTurmasIds(List<Long> turmasIds) {
+    this.turmasIds = turmasIds;
+  }
 
   public String getNome() {
     return nome;
@@ -30,14 +38,6 @@ public class DisciplinaRequest {
 
   public void setProfessorId(Long professorId) {
     this.professorId = professorId;
-  }
-
-  public List<Long> getTurmas() {
-    return turmas;
-  }
-
-  public void setTurmas(List<Long> turmas) {
-    this.turmas = turmas;
   }
 
 }

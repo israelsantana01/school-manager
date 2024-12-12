@@ -27,7 +27,6 @@ public class ProfessorController {
     private String className = "Professor(a)";
     private String POST_SUCCESS_MSG = className + " criado(a) com sucesso!";
     private String PUT_SUCCESS_MSG = className + " atualizado(a) com sucesso!";
-    private String DELETE_SUCCESS_MSG = className + " deletado(a) com sucesso!";
 
     @Autowired
     private ProfessorService professorService;
@@ -85,7 +84,7 @@ public class ProfessorController {
     public ResponseEntity<?> deleteAluno(@PathVariable Long id) {
         try {
             professorService.deleteById(id);
-            return ResponseEntity.ok(ResponseHelper.buildResponse(null, DELETE_SUCCESS_MSG));
+            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id" + id + " deletado(a) com sucesso!"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }

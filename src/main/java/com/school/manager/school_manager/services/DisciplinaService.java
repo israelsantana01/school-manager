@@ -71,7 +71,11 @@ public class DisciplinaService {
   public DisciplinaGetByIdResponse save(DisciplinaRequest request) {
     try {
       Professor professor = professorRepository.findById(request.getProfessorId());
+
       List<Turma> turmas = new ArrayList<>();
+      if (request.getTurmasIds() != null && !request.getTurmasIds().isEmpty()) {
+        turmas = turmaRepository.findAllById(request.getTurmasIds());
+      }
 
       Disciplina itemSalvo = disciplinaRepository.save(new Disciplina(
         request.getNome(),
@@ -97,12 +101,16 @@ public class DisciplinaService {
 
   public DisciplinaGetByIdResponse update(DisciplinaRequest request, Long id) {
     try {
-      Disciplina itemJaSalvo = disciplinaRepository.findById(id);
+      Disciplina disciplina = disciplinaRepository.findById(id);
       Professor professor = professorRepository.findById(request.getProfessorId());
-      List<Turma> turmas = new ArrayList<>();
 
-      Disciplina itemAtualizado = disciplinaRepository.update(new Disciplina(
-        itemJaSalvo.getId(),
+      List<Turma> turmas = new ArrayList<>();
+      if (request.getTurmasIds() != null && !request.getTurmasIds().isEmpty()) {
+        turmas = turmaRepository.findAllById(request.getTurmasIds());
+      }
+
+      Disciplina itemSalvo = disciplinaRepository.update(new Disciplina(
+        disciplina.getId(),
         request.getNome(),
         request.getCargaHoraria(),
         professor,
@@ -110,11 +118,11 @@ public class DisciplinaService {
       ));
 
       return new DisciplinaGetByIdResponse(
-        itemAtualizado.getId(),
-        itemAtualizado.getNome(),
-        itemAtualizado.getCargaHoraria(),
-        new EntidadeResumida(itemAtualizado.getProfessor().getId(), itemAtualizado.getProfessor().getNome()),
-        itemAtualizado.getTurmas().stream().map(turma -> new EntidadeResumida(
+        itemSalvo.getId(),
+        itemSalvo.getNome(),
+        itemSalvo.getCargaHoraria(),
+        new EntidadeResumida(itemSalvo.getProfessor().getId(), itemSalvo.getProfessor().getNome()),
+        itemSalvo.getTurmas().stream().map(turma -> new EntidadeResumida(
           turma.getId(),
           turma.getNome()
         )).collect(Collectors.toList())
@@ -126,23 +134,6 @@ public class DisciplinaService {
 
   public void deleteById(Long id) {
     try {
-      Disciplina disciplina = disciplinaRepository.findById(id);
-      // Remover a disciplina de todas as turmas em que ela está associada
-      List<Turma> turmas = turmaRepository.findAllByDisciplinaId(id);
-      for (Turma turma : turmas) {
-        // Remover a disciplina da lista de disciplinas da turma
-        turma.getDisciplinas().remove(disciplina);
-
-        // Atualizar a lista de professores com base nas disciplinas restantes
-        List<Professor> professoresAtualizados = turma.getDisciplinas().stream()
-                .map(Disciplina::getProfessor)
-                .distinct()
-                .collect(Collectors.toList());
-
-        turma.setProfessores(professoresAtualizados);
-        turmaRepository.update(turma);
-      }
-
       disciplinaRepository.delete(id);
     } catch (Exception e) {
       throw e;
