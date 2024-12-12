@@ -29,24 +29,18 @@ public class Turma {
   private int ano;
 
   @OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
-  // @OneToMany(mappedBy = "turma")
-  // @OneToMany(mappedBy = "turma", fetch = FetchType.LAZY)
   private List<Aluno> alunos = new ArrayList<>();
 
   @ManyToMany(mappedBy = "turmas", fetch = FetchType.EAGER)
-  // @ManyToMany(mappedBy = "turmas")
   private List<Professor> professores = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.EAGER)
-  // @ManyToMany()
   @JoinTable(
     name = "disciplina_turma",
     joinColumns = @JoinColumn(name = "turma_id"),
     inverseJoinColumns = @JoinColumn(name = "disciplina_id")
   )
   private List<Disciplina> disciplinas = new ArrayList<>();
-
-  
 
   public Turma(Long id, String nome, int ano, List<Aluno> alunos, List<Professor> professores,
       List<Disciplina> disciplinas) {

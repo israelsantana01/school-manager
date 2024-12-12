@@ -31,7 +31,6 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
-    // Listar todos os alunos
     @GetMapping
     public ResponseEntity<?> getAllAlunos() {
         try {
@@ -42,7 +41,6 @@ public class AlunoController {
         }
     }
 
-    // Buscar aluno por ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getAlunoById(@PathVariable Long id) {
         try {
@@ -54,7 +52,6 @@ public class AlunoController {
         }
     }
 
-    // Criar um novo aluno
     @PostMapping
     public ResponseEntity<?> createAluno(@Valid @RequestBody AlunoRequest aluno, BindingResult result) {
         try {
@@ -69,7 +66,6 @@ public class AlunoController {
         }
     }
 
-    // // Atualizar um aluno existente
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAluno(@PathVariable Long id, @Valid @RequestBody AlunoRequest aluno, BindingResult result) {
         try {
@@ -84,7 +80,6 @@ public class AlunoController {
         }
     }
 
-    // // Deletar um aluno
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAluno(@PathVariable Long id) {
         try {

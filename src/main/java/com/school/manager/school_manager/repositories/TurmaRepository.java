@@ -8,7 +8,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.school.manager.school_manager.models.Disciplina;
 import com.school.manager.school_manager.models.Turma;
 
 @Repository
@@ -93,38 +92,6 @@ public class TurmaRepository {
       throw new RuntimeException("Erro ao salvar a turma: " + e.getMessage(), e);
     } finally {
       session.close();
-    }
-  }
-
-  public void associarDisciplinaATurmas(Long disciplinaId, List<Long> turmaIds) {
-    Session session = sessionFactory.openSession();
-    Transaction transaction = null;
-
-    try {
-      transaction = session.beginTransaction();
-
-      // Buscar a disciplina
-      Disciplina disciplina = session.get(Disciplina.class, disciplinaId);
-
-      // Buscar as turmas associadas
-      List<Turma> turmas = session.createQuery(
-              "FROM Turma WHERE id IN :turmaIds", Turma.class)
-              .setParameter("turmaIds", turmaIds)
-              .list();
-
-      // Associar a disciplina às turmas
-      for (Turma turma : turmas) {
-        turma.getDisciplinas().add(disciplina);
-        session.merge(turma);
-      }
-
-      // Commit da transação
-      transaction.commit();
-    } catch (Exception e) {
-      if (transaction != null) transaction.rollback(); // Rollback em caso de erro
-      throw new RuntimeException("Erro ao associar disciplina às turmas", e);
-    } finally {
-      session.close(); // Fecha a sessão
     }
   }
 

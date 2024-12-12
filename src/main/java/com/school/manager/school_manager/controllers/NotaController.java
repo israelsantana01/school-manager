@@ -27,7 +27,6 @@ public class NotaController {
     private String className = "Nota";
     private String POST_SUCCESS_MSG = className + " criada com sucesso!";
     private String PUT_SUCCESS_MSG = className + " atualizada com sucesso!";
-    private String DELETE_SUCCESS_MSG = className + " deletada com sucesso!";
 
     @Autowired
     private NotaService notaService;
