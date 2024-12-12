@@ -1,5 +1,8 @@
 package com.school.manager.school_manager.dtos.turmas;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TurmaGetAllResponse {
   private Long id;
   private String nome;

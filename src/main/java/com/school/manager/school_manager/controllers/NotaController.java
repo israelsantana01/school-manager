@@ -43,9 +43,9 @@ public class NotaController {
     }
 
     @GetMapping("/{alunoId}")
-    public ResponseEntity<?> getNotaById(@PathVariable Long id) {
+    public ResponseEntity<?> getNotaById(@PathVariable Long alunoId) {
         try {
-            return ResponseEntity.ok(ResponseHelper.buildResponse(notaService.findByAlunoId(id)));
+            return ResponseEntity.ok(ResponseHelper.buildResponse(notaService.findByAlunoId(alunoId)));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ResponseHelper.buildResponse(null, e.getMessage()));
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class NotaController {
     public ResponseEntity<?> deleteNota(@PathVariable Long id) {
         try {
             notaService.deleteById(id);
-            return ResponseEntity.ok(ResponseHelper.buildResponse(null, DELETE_SUCCESS_MSG));
+            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id " + id + " deletada com sucesso!"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }

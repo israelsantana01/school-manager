@@ -34,7 +34,7 @@ public class NotaRepository {
     Session session = sessionFactory.openSession();
 
     try {
-      Query<Nota> query = session.createQuery("FROM Nota WHERE id = :id", Nota.class);
+      Query<Nota> query = session.createQuery("FROM Nota WHERE aluno.id = :id", Nota.class);
       query.setParameter("id", alunoId);
       return query.getResultList();
     } catch (Exception e) {

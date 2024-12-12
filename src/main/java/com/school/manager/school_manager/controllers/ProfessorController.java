@@ -84,7 +84,7 @@ public class ProfessorController {
     public ResponseEntity<?> deleteAluno(@PathVariable Long id) {
         try {
             professorService.deleteById(id);
-            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id" + id + " deletado(a) com sucesso!"));
+            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id " + id + " deletado(a) com sucesso!"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }

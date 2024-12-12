@@ -84,7 +84,7 @@ public class DisciplinaController {
     public ResponseEntity<?> deleteDisciplina(@PathVariable Long id) {
         try {
             disciplinaService.deleteById(id);
-            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id" + id + " deletada com sucesso!"));
+            return ResponseEntity.ok(ResponseHelper.buildResponse(null, className + " com id " + id + " deletada com sucesso!"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseHelper.buildResponse(null, e.getMessage()));
         }

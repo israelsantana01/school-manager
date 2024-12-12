@@ -2,12 +2,13 @@ package com.school.manager.school_manager.dtos.notas;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 public class NotaRequest {
-  @NotNull(message = "O valor da nota é obrigatório.")
-  @Size(min = 0, max = 10, message = "O valor da nota deve ser entre 0 e 10.")
+  @Min(0)
+  @Max(10)
   private double valor;
 
   @NotNull(message = "A data de avaliação é obrigatória.")

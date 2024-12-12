@@ -2,6 +2,7 @@ package com.school.manager.school_manager.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,32 +17,57 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Turma")
 public class Turma {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  // @JsonView(Views.Public.class)
   private Long id;
 
-  // @JsonView(Views.Public.class)
+  @Column(nullable = false)
   private String nome;
 
-  // @JsonView(Views.Public.class)
+  @Column(nullable = false)
   private int ano;
 
-  // @JsonView(Views.Internal.class)
   @OneToMany(mappedBy = "turma", fetch = FetchType.EAGER)
+  // @OneToMany(mappedBy = "turma")
+  // @OneToMany(mappedBy = "turma", fetch = FetchType.LAZY)
   private List<Aluno> alunos = new ArrayList<>();
 
-  @ManyToMany(mappedBy = "turmas")
-  private List<Professor> professores;
+  @ManyToMany(mappedBy = "turmas", fetch = FetchType.EAGER)
+  // @ManyToMany(mappedBy = "turmas")
+  private List<Professor> professores = new ArrayList<>();
 
-  // @JsonView(Views.Internal.class)
   @ManyToMany(fetch = FetchType.EAGER)
+  // @ManyToMany()
   @JoinTable(
     name = "disciplina_turma",
     joinColumns = @JoinColumn(name = "turma_id"),
     inverseJoinColumns = @JoinColumn(name = "disciplina_id")
   )
-  private List<Disciplina> disciplinas;
+  private List<Disciplina> disciplinas = new ArrayList<>();
+
+  
+
+  public Turma(Long id, String nome, int ano, List<Aluno> alunos, List<Professor> professores,
+      List<Disciplina> disciplinas) {
+    this.id = id;
+    this.nome = nome;
+    this.ano = ano;
+    this.alunos = alunos;
+    this.professores = professores;
+    this.disciplinas = disciplinas;
+  }
+
+  public Turma(String nome, int ano, List<Aluno> alunos, List<Professor> professores, List<Disciplina> disciplinas) {
+    this.nome = nome;
+    this.ano = ano;
+    this.alunos = alunos;
+    this.professores = professores;
+    this.disciplinas = disciplinas;
+  }
+
+  public Turma() {
+  }
 
   public Long getId() {
     return id;
@@ -71,13 +97,6 @@ public class Turma {
     return alunos;
   }
 
-  // public List<EntidadeResumida> getAlunosResumido() {
-  //   List<EntidadeResumida> retorno = new ArrayList<>();
-
-  //   alunos.forEach(item -> { retorno.add(new EntidadeResumida(item.getId(), item.getNome())); });
-  //   return retorno;
-  // }
-
   public void setAlunos(List<Aluno> alunos) {
     this.alunos = alunos;
   }
@@ -86,15 +105,16 @@ public class Turma {
     return disciplinas;
   }
 
-  // public List<EntidadeResumida> getDisciplinasResumido() {
-  //   List<EntidadeResumida> retorno = new ArrayList<>();
-
-  //   disciplinas.forEach(item -> { retorno.add(new EntidadeResumida(item.getId(), item.getNome())); });
-  //   return retorno;
-  // }
-
   public void setDisciplinas(List<Disciplina> disciplinas) {
     this.disciplinas = disciplinas;
+  }
+
+  public List<Professor> getProfessores() {
+    return professores;
+  }
+
+  public void setProfessores(List<Professor> professores) {
+    this.professores = professores;
   }
 
 }

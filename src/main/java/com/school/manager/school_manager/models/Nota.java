@@ -28,6 +28,9 @@ public class Nota {
   private double valor;
   private LocalDate dataAvaliacao;
 
+  public Nota() {
+  }
+
   public Nota(Long id, Aluno aluno, Disciplina disciplina, double valor, LocalDate dataAvaliacao) {
     this.id = id;
     this.aluno = aluno;
